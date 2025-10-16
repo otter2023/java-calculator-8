@@ -1,8 +1,6 @@
 package calculator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Calculator {
     String expression;
@@ -19,11 +17,13 @@ public class Calculator {
 
         String[] number;
 
-        if (expression.isEmpty()){
+        if (expression.isEmpty()) {
             return;
         }
 
-        if (isCustomExpression()){
+        isExpressionStartAndEndWithNumber();
+
+        if (existCustomExpression()) {
             separators = getCustomExpression();
             expression = expression.substring(5);
         }
@@ -39,24 +39,30 @@ public class Calculator {
 
         System.out.println(separators);
 
-        for(String a : number){
+        for (String a : number) {
             result += Integer.parseInt(a);
         }
     }
 
-    public boolean isCustomExpression(){
-        return !expression.matches("^[0-9].*");
+    public void isExpressionStartAndEndWithNumber() {
+        if (!(expression.matches("^[0-9].*") && expression.matches(".*[0-9]$"))) {
+            throw new IllegalArgumentException("문자열은 숫자로 시작하고 끝나야 합니다.");
+        }
     }
 
-    public char getCustomExpression(){
-        if (expression.charAt(0) != '/' || expression.charAt(1) != '/' || expression.charAt(3) != '\\' || expression.charAt(4) != 'n'){
+    public boolean existCustomExpression() {
+        return expression.contains("\\") || expression.contains("\n");
+    }
+
+    public char getCustomExpression() {
+        if (expression.charAt(0) != '/' || expression.charAt(1) != '/' || expression.charAt(3) != '\\' || expression.charAt(4) != 'n') {
             throw new IllegalArgumentException("올바른 커스텀 문자열 형식이 아닙니다.");
         }
         return expression.charAt(2);
     }
 
-    public void checkValidExpression(){
-        if (!expression.matches("^[0-9,]+$")){
+    public void checkValidExpression() {
+        if (!expression.matches("^[0-9,]+$")) {
             throw new IllegalArgumentException("구분자와 숫자 이외의 문자가 있습니다.");
         }
     }
