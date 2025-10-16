@@ -13,9 +13,9 @@ public class CalculatorController {
         Calculator calculator = new Calculator(expression);
         try {
             calculator.calculate();
+            calculatorView.output(calculator.result);
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
-        calculatorView.output(calculator.result);
     }
 }
