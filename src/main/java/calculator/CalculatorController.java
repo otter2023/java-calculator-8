@@ -11,6 +11,11 @@ public class CalculatorController {
     public void run() {
         String expression = calculatorView.input();
         Calculator calculator = new Calculator(expression);
+        try {
+            calculator.calculate();
+        } catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
         calculatorView.output(calculator.result);
     }
 }
