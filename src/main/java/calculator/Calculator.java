@@ -29,6 +29,8 @@ public class Calculator {
 
         number = expression.split(",");
 
+        checkValidExpression();
+
         System.out.println(Arrays.toString(number));
 
         System.out.println(separators);
@@ -47,5 +49,11 @@ public class Calculator {
             throw new IllegalArgumentException("올바른 커스텀 문자열 형식이 아닙니다.");
         }
         return expression.charAt(2);
+    }
+
+    public void checkValidExpression(){
+        if (!expression.matches("^[0-9,]+$")){
+            throw new IllegalArgumentException("구분자와 숫자 이외의 문자가 있습니다.");
+        }
     }
 }
