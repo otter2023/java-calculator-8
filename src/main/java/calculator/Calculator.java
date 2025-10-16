@@ -19,6 +19,10 @@ public class Calculator {
 
         String[] number;
 
+        if (expression.isEmpty()){
+            return;
+        }
+
         if (isCustomExpression()){
             separators = getCustomExpression();
             expression = expression.substring(5);
