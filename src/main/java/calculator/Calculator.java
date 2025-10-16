@@ -6,6 +6,7 @@ public class Calculator {
     String expression;
     Character separators;
     int result;
+    String[] number;
 
     public Calculator(String expression) {
         this.expression = expression;
@@ -15,13 +16,9 @@ public class Calculator {
 
     public void calculate() {
 
-        String[] number;
-
         if (expression.isEmpty()) {
             return;
         }
-
-        isExpressionStartAndEndWithNumber();
 
         if (existCustomExpression()) {
             separators = getCustomExpression();
@@ -33,7 +30,9 @@ public class Calculator {
 
         number = expression.split(",");
 
-        checkValidExpression();
+        validateExpressionStartAndEndWithNumber();
+        validateSeparators();
+        validateSeparatorFollowedByNumber();
 
         System.out.println(Arrays.toString(number));
 
@@ -44,14 +43,14 @@ public class Calculator {
         }
     }
 
-    public void isExpressionStartAndEndWithNumber() {
+    public void validateExpressionStartAndEndWithNumber() {
         if (!(expression.matches("^[0-9].*") && expression.matches(".*[0-9]$"))) {
             throw new IllegalArgumentException("문자열은 숫자로 시작하고 끝나야 합니다.");
         }
     }
 
     public boolean existCustomExpression() {
-        return expression.contains("\\") || expression.contains("\n");
+        return expression.contains("//") || expression.contains("\\n");
     }
 
     public char getCustomExpression() {
@@ -61,9 +60,18 @@ public class Calculator {
         return expression.charAt(2);
     }
 
-    public void checkValidExpression() {
+    public void validateSeparators() {
         if (!expression.matches("^[0-9,]+$")) {
             throw new IllegalArgumentException("구분자와 숫자 이외의 문자가 있습니다.");
         }
     }
+
+    public void validateSeparatorFollowedByNumber(){
+        for (String num : number) {
+            if (!num.matches("^[0-9]+$")) {
+                throw new IllegalArgumentException("구분자는 연속해서 등장할 수 없습니다.");
+            }
+        }
+    }
+
 }
