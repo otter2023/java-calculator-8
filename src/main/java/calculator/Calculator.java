@@ -1,6 +1,7 @@
 package calculator;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class Calculator {
     String expression;
@@ -27,10 +28,10 @@ public class Calculator {
             expression = expression.substring(5);
         }
 
-        number = expression.split(String.valueOf(separator));
+        number = expression.split(Pattern.quote(String.valueOf(separator)));
 
-        validateExpressionStartAndEndWithNumber();
         validateSeparators();
+        validateExpressionStartAndEndWithNumber();
         validateSeparatorFollowedByNumber();
 
         for (String a : number) {
@@ -45,7 +46,11 @@ public class Calculator {
     }
 
     public boolean existCustomExpression() {
-        return expression.contains("//") || expression.contains("\\n");
+        if (expression.length() < 5) {
+            return false;
+        }
+
+        return expression.contains("//") && expression.contains("\\n");
     }
 
     public char getCustomExpression() {
