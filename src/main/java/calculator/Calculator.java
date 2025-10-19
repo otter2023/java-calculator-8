@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public class Calculator {
     String expression;
-    Character separators;
+    Character separator;
     int result;
     String[] number;
 
     public Calculator(String expression) {
         this.expression = expression;
         result = 0;
-        separators = ',';
+        separator = ',';
     }
 
     public void calculate() {
@@ -20,23 +20,21 @@ public class Calculator {
             return;
         }
 
+        expression = expression.replace(':', ',');
+
         if (existCustomExpression()) {
-            separators = getCustomExpression();
+            separator = getCustomExpression();
             expression = expression.substring(5);
         }
 
-        expression = expression.replace(separators, ',');
-        expression = expression.replace(';', ',');
+        number = expression.split(String.valueOf(separator));
 
-        number = expression.split(",");
+        System.out.println(Arrays.toString(number));
+        System.out.println(separator);
 
         validateExpressionStartAndEndWithNumber();
         validateSeparators();
         validateSeparatorFollowedByNumber();
-
-        System.out.println(Arrays.toString(number));
-
-        System.out.println(separators);
 
         for (String a : number) {
             result += Integer.parseInt(a);
@@ -61,7 +59,7 @@ public class Calculator {
     }
 
     public void validateSeparators() {
-        if (!expression.matches("^[0-9,]+$")) {
+        if (!expression.matches("^[0-9" + separator + "]+$")) {
             throw new IllegalArgumentException("구분자와 숫자 이외의 문자가 있습니다.");
         }
     }
