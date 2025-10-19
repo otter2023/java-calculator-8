@@ -11,7 +11,7 @@ public class CalculatorController {
     public void run() {
         String expression = calculatorView.input();
         Calculator calculator = new Calculator(expression);
-        calculator.calculate();
-        calculatorView.output(calculator.result);
+        int result = calculator.calculate();
+        calculatorView.output(result);
     }
 }
