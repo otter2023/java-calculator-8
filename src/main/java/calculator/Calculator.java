@@ -29,9 +29,6 @@ public class Calculator {
 
         number = expression.split(String.valueOf(separator));
 
-        System.out.println(Arrays.toString(number));
-        System.out.println(separator);
-
         validateExpressionStartAndEndWithNumber();
         validateSeparators();
         validateSeparatorFollowedByNumber();
